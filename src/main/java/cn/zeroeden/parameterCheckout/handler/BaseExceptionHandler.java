@@ -12,6 +12,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import javax.xml.bind.ValidationException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -65,14 +67,13 @@ public class BaseExceptionHandler {
                         .collect(Collectors.joining(";")),
                 false);
     }
-//    @ExceptionHandler(value = ValidationException.class)
-//    public Result parameterValidationFail(ValidationException e){
-//        e = (ConstraintViolationException)e;
-//        return new Result(REQUEST_PARARMETER_ILLEGAL.code(), e.getConstraintViolations().stream()
-//                .map(ConstraintViolation::getMessage)
-//                .collect(Collectors.joining(";")),
-//                false);
-//    }
+    @ExceptionHandler(value = ConstraintViolationException.class)
+    public Result parameterValidationFail(ConstraintViolationException e){
+        return new Result(REQUEST_PARARMETER_ILLEGAL.code(), e.getConstraintViolations().stream()
+                .map(ConstraintViolation::getMessage)
+                .collect(Collectors.joining(";")),
+                false);
+    }
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public Result methodArgumentNotValid(MethodArgumentNotValidException e){
         return new Result(REQUEST_PARARMETER_ILLEGAL.code(),
@@ -90,7 +91,6 @@ public class BaseExceptionHandler {
      */
     @ExceptionHandler(value = Exception.class)
     public Result error(Exception e) {
-
         return new Result(ResultCode.SERVER_ERROR);
     }
 }

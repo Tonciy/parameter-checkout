@@ -8,6 +8,8 @@ class ParameterCheckoutApplicationTests {
 
     @Test
     void contextLoads() {
+        String tem = "1 3";
+        System.out.println(Integer.valueOf(tem));
     }
 
 }
