@@ -9,15 +9,21 @@ import cn.zeroeden.parameterCheckout.service.DemoService;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.ConstraintViolation;
 import javax.validation.Valid;
+import javax.validation.Validator;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
+import java.util.Set;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * @author: Zero
@@ -35,6 +41,13 @@ public class UserController {
 
     @Resource
     private DemoService demoService;
+
+    /**
+     * 用来测试手动校验
+     */
+    @Resource
+    private Validator validator;
+
     @PostMapping("/add")
     public Result addUser(@RequestBody @Valid User user) {
 //        if(StringUtils.isEmpty(user.getId()) ){
@@ -104,16 +117,74 @@ public class UserController {
         return Result.SUCCESS();
     }
 
+    /**
+     * 在其他组件层面上进行【参数校验】--对象
+     * @param user
+     * @return
+     */
     @GetMapping("/demo1")
     public Result demo1(User user){
         demoService.doTest(user);
         return Result.SUCCESS();
     }
 
+    /**
+     * 在其他组件层面上进行【参数校验】--单个参数
+     * @param id
+     * @return
+     */
     @GetMapping("/demo2")
     public Result demo2(String id){
         demoService.doTest2(id);
         return Result.SUCCESS();
+    }
+
+    /**
+     * 手动校验测试-1
+     * @param user
+     * @return
+     */
+    @PostMapping("/add2")
+    public Result addUser2(@RequestBody User user) throws IllegalArgumentException{
+        log.info("手动校验【start】");
+        Set<ConstraintViolation<User>> validate = validator.validate(user);
+        if (validate.isEmpty()) {
+            // 检验通过
+            log.info("校验通过");
+            log.info("增加用户：{}", user);
+            return Result.SUCCESS();
+        }else{
+            log.info("校验失败");
+            // 用来拼接信息
+            StringBuilder errorMsg = new StringBuilder();
+            for (ConstraintViolation<User> userConstraintViolation : validate) {
+                log.info(userConstraintViolation.toString());
+                errorMsg.append(userConstraintViolation.getMessageTemplate()).append(";");
+            }
+            throw new IllegalArgumentException(errorMsg.toString());
+        }
+    }
+
+    /**
+     * 手动校验测试-2
+     * @param user
+     * @return
+     */
+    @PostMapping("/add3")
+    public Result addUser3(@RequestBody @Validated User user,BindingResult result) throws IllegalArgumentException{
+        log.info("手动校验【start】");
+        if (result.hasErrors()) {
+            log.info("校验失败");
+            // 用来拼接信息
+            String errorMsg = result.getAllErrors().stream().map(ObjectError::getDefaultMessage)
+                    .collect(Collectors.joining(";"));
+            throw new IllegalArgumentException(errorMsg);
+        }else{
+            // 检验通过
+            log.info("校验通过");
+            log.info("增加用户：{}", user);
+            return Result.SUCCESS();
+        }
     }
 
 }
