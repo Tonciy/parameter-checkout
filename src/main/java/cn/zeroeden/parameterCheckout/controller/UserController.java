@@ -5,6 +5,8 @@ import cn.zeroeden.parameterCheckout.entity.User;
 import cn.zeroeden.parameterCheckout.exception.CommonException;
 import cn.zeroeden.parameterCheckout.exception.IllegalArgumentException;
 import cn.zeroeden.parameterCheckout.model.Result;
+import cn.zeroeden.parameterCheckout.parameterValidationGroup.UserAdd;
+import cn.zeroeden.parameterCheckout.parameterValidationGroup.UserUpdate;
 import cn.zeroeden.parameterCheckout.service.DemoService;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.Length;
@@ -186,5 +188,36 @@ public class UserController {
             return Result.SUCCESS();
         }
     }
+
+
+    /**
+     * 分组校验-1
+     * @param user
+     * @return
+     */
+    @PostMapping("/add4")
+    public Result addUser4(@RequestBody @Validated(UserAdd.class) User user) {
+        log.info("增加用户:{}", user);
+        return Result.SUCCESS();
+    }
+
+    /**
+     * 分组校验-2
+     * @param user
+     * @return
+     */
+    @PostMapping("/update4")
+    public Result updateById4(@RequestBody @Validated(UserUpdate.class) User user) {
+        log.info("根据Id修改用户：{}", user);
+        return Result.SUCCESS();
+    }
+
+
+
+
+
+
+
+
 
 }
