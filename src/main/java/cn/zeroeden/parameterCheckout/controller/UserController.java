@@ -7,6 +7,7 @@ import cn.zeroeden.parameterCheckout.exception.IllegalArgumentException;
 import cn.zeroeden.parameterCheckout.model.Result;
 import cn.zeroeden.parameterCheckout.parameterValidationGroup.UserAdd;
 import cn.zeroeden.parameterCheckout.parameterValidationGroup.UserUpdate;
+import cn.zeroeden.parameterCheckout.parameterValidationGroup.ValidGroup;
 import cn.zeroeden.parameterCheckout.service.DemoService;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.Length;
@@ -22,6 +23,7 @@ import javax.validation.Valid;
 import javax.validation.Validator;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.groups.Default;
 import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -207,7 +209,29 @@ public class UserController {
      * @return
      */
     @PostMapping("/update4")
-    public Result updateById4(@RequestBody @Validated(UserUpdate.class) User user) {
+    public Result updateById4(@RequestBody @Validated({UserUpdate.class, Default.class}) User user) {
+        log.info("根据Id修改用户：{}", user);
+        return Result.SUCCESS();
+    }
+
+    /**
+     * 分组校验-3
+     * @param user
+     * @return
+     */
+    @PostMapping("/add5")
+    public Result addUser5(@RequestBody @Validated(UserAdd.class) User user) {
+        log.info("增加用户:{}", user);
+        return Result.SUCCESS();
+    }
+
+    /**
+     * 分组校验-4
+     * @param user
+     * @return
+     */
+    @PostMapping("/update5")
+    public Result updateById5(@RequestBody @Validated({ValidGroup.UserCurd.Update.class}) User user) {
         log.info("根据Id修改用户：{}", user);
         return Result.SUCCESS();
     }
