@@ -274,6 +274,15 @@ public class UserController {
 
 
 
-
+    /**
+     * 组合检验注解
+     * @param user
+     * @return
+     */
+    @PostMapping("/update9")
+    public Result updateById9(@RequestBody @Validated(UserUpdate.class) User user) {
+        log.info("根据Id修改用户：{}", user);
+        return Result.SUCCESS();
+    }
 
 }

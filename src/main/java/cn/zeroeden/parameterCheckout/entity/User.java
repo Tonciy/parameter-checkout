@@ -3,6 +3,7 @@ package cn.zeroeden.parameterCheckout.entity;
 import cn.zeroeden.parameterCheckout.parameterValidationGroup.UserAdd;
 import cn.zeroeden.parameterCheckout.parameterValidationGroup.UserUpdate;
 import cn.zeroeden.parameterCheckout.parameterValidationGroup.ValidGroup;
+import cn.zeroeden.parameterCheckout.validationAnnotationCustom.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -41,8 +42,7 @@ public class User {
     /**
      * id 长度在 6 - 12 之间
      */
-    @NotNull(message = "id不能为空", groups = {UserUpdate.class})
-    @Length(max = 12, min = 6,message = "id长度必须位于[6-12]",groups = {UserUpdate.class})
+    @Id(groups = {UserUpdate.class})
     private String id;
 
     /**
