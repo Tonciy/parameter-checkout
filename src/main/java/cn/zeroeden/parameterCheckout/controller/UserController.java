@@ -1,6 +1,7 @@
 package cn.zeroeden.parameterCheckout.controller;
 
 import cn.zeroeden.parameterCheckout.contant.ResultCode;
+import cn.zeroeden.parameterCheckout.entity.Hobby;
 import cn.zeroeden.parameterCheckout.entity.User;
 import cn.zeroeden.parameterCheckout.entity.ValidationList;
 import cn.zeroeden.parameterCheckout.exception.CommonException;
@@ -19,6 +20,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.Valid;
 import javax.validation.Validator;
@@ -191,6 +193,22 @@ public class UserController {
             log.info("增加用户：{}", user);
             return Result.SUCCESS();
         }
+    }
+
+    /**
+     * 手动校验测试-2
+     * @param user
+     * @return
+     */
+    @PostMapping("/add33")
+    public Result addUser33(BindingResult result1,@RequestBody @Validated(UserAdd.class) User user
+                           ){
+        log.info("手动校验【start】");
+        log.info(user.toString());
+//        log.info(request.toString());
+        log.info("result1: {}", result1.hasErrors());
+//        log.info("result2: {}", result2.hasErrors());
+        return Result.SUCCESS();
     }
 
 

@@ -23,8 +23,8 @@ public class Hobby {
     /**
      * 名称
      */
-    @NotBlank(message = "爱好名称不能为空",groups = {UserAdd.class})
-    private  String name;
+//    @NotBlank(message = "爱好名称不能为空",groups = {UserAdd.class})
+//    private  String name;
 
     /**
      * 花费

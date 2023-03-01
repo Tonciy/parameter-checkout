@@ -92,7 +92,7 @@ public class User {
 //    @Valid
 //    private List<Hobby> hobbys;
 
-    @City(groups = {UserAdd.class})
-    private Integer city;
+//    @City(groups = {UserAdd.class})
+//    private Integer city;
 
 }

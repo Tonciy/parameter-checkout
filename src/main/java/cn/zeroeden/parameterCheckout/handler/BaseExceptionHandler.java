@@ -33,71 +33,71 @@ import static cn.zeroeden.parameterCheckout.contant.ResultCode.REQUEST_PARARMETE
 @Slf4j
 public class BaseExceptionHandler {
 
-    /**
-     * 通用自定义异常捕获
-     *
-     * @return
-     */
-    @ExceptionHandler(value = CommonException.class)
-    public Result commonException(CommonException exception) {
-        if (exception.getMessage() != null && exception.getMessage().equals(ResultCode.REQUEST_METHOD_NOT_SUPPORT.message())) {
-            // 不支持的请求方法类型
-            return new Result(ResultCode.REQUEST_METHOD_NOT_SUPPORT);
-        }
-        if (exception.getMessage() != null) {
-            // 给定异常信息
-            return new Result(10001, exception.getMessage(), false);
-        }
-        // 请求失败
-        return new Result(ResultCode.FAIL);
-    }
-    /**
-     * 请求参数不符合异常
-     *
-     * @return
-     */
-    @ExceptionHandler(value = IllegalArgumentException.class)
-    public Result illegalArgumentException (IllegalArgumentException e) {
-        return new Result(REQUEST_PARARMETER_ILLEGAL.code(),e.getMessage(), false);
-    }
-
-
-    @ExceptionHandler(value = BindException.class)
-    public Result parameterBindFail(BindException e){
-        return new Result(REQUEST_PARARMETER_ILLEGAL.code(),
-                e.getAllErrors().stream()
-                        .map(ObjectError::getDefaultMessage)
-                        .collect(Collectors.joining(";")),
-                false);
-    }
-    @ExceptionHandler(value = ConstraintViolationException.class)
-    public Result parameterValidationFail(ConstraintViolationException e){
-        return new Result(REQUEST_PARARMETER_ILLEGAL.code(), e.getConstraintViolations().stream()
-                .map(ConstraintViolation::getMessage)
-                .collect(Collectors.joining(";")),
-                false);
-    }
-    @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    public Result methodArgumentNotValid(MethodArgumentNotValidException e){
-        return new Result(REQUEST_PARARMETER_ILLEGAL.code(),
-                e.getBindingResult().getAllErrors().stream()
-                        .map(ObjectError::getDefaultMessage)
-                        .collect(Collectors.joining(";")),
-                false);
-
-    }
-
-
-
-
-
-    /**
-     * 服务器异常统一返回
-     *
-     * @return
-     */
-    @ExceptionHandler(value = Exception.class)
-    public Result error(Exception e) {
-        return new Result(ResultCode.SERVER_ERROR);
-    }
+//    /**
+//     * 通用自定义异常捕获
+//     *
+//     * @return
+//     */
+//    @ExceptionHandler(value = CommonException.class)
+//    public Result commonException(CommonException exception) {
+//        if (exception.getMessage() != null && exception.getMessage().equals(ResultCode.REQUEST_METHOD_NOT_SUPPORT.message())) {
+//            // 不支持的请求方法类型
+//            return new Result(ResultCode.REQUEST_METHOD_NOT_SUPPORT);
+//        }
+//        if (exception.getMessage() != null) {
+//            // 给定异常信息
+//            return new Result(10001, exception.getMessage(), false);
+//        }
+//        // 请求失败
+//        return new Result(ResultCode.FAIL);
+//    }
+//    /**
+//     * 请求参数不符合异常
+//     *
+//     * @return
+//     */
+//    @ExceptionHandler(value = IllegalArgumentException.class)
+//    public Result illegalArgumentException (IllegalArgumentException e) {
+//        return new Result(REQUEST_PARARMETER_ILLEGAL.code(),e.getMessage(), false);
+//    }
+//
+//
+//    @ExceptionHandler(value = BindException.class)
+//    public Result parameterBindFail(BindException e){
+//        return new Result(REQUEST_PARARMETER_ILLEGAL.code(),
+//                e.getAllErrors().stream()
+//                        .map(ObjectError::getDefaultMessage)
+//                        .collect(Collectors.joining(";")),
+//                false);
+//    }
+//    @ExceptionHandler(value = ConstraintViolationException.class)
+//    public Result parameterValidationFail(ConstraintViolationException e){
+//        return new Result(REQUEST_PARARMETER_ILLEGAL.code(), e.getConstraintViolations().stream()
+//                .map(ConstraintViolation::getMessage)
+//                .collect(Collectors.joining(";")),
+//                false);
+//    }
+//    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+//    public Result methodArgumentNotValid(MethodArgumentNotValidException e){
+//        return new Result(REQUEST_PARARMETER_ILLEGAL.code(),
+//                e.getBindingResult().getAllErrors().stream()
+//                        .map(ObjectError::getDefaultMessage)
+//                        .collect(Collectors.joining(";")),
+//                false);
+//
+//    }
+//
+//
+//
+//
+//
+//    /**
+//     * 服务器异常统一返回
+//     *
+//     * @return
+//     */
+//    @ExceptionHandler(value = Exception.class)
+//    public Result error(Exception e) {
+//        return new Result(ResultCode.SERVER_ERROR);
+//    }
 }
