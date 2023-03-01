@@ -285,4 +285,14 @@ public class UserController {
         return Result.SUCCESS();
     }
 
+
+    /**
+     * 自定义检验注解
+     * @return
+     */
+    @PostMapping("/add10")
+    public Result addUser10(@RequestBody @Validated({UserAdd.class}) User user) {
+        log.info("增加用户:{}", user);
+        return Result.SUCCESS();
+    }
 }

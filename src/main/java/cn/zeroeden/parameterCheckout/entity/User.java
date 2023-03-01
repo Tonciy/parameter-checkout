@@ -3,6 +3,7 @@ package cn.zeroeden.parameterCheckout.entity;
 import cn.zeroeden.parameterCheckout.parameterValidationGroup.UserAdd;
 import cn.zeroeden.parameterCheckout.parameterValidationGroup.UserUpdate;
 import cn.zeroeden.parameterCheckout.parameterValidationGroup.ValidGroup;
+import cn.zeroeden.parameterCheckout.validationAnnotationCustom.City;
 import cn.zeroeden.parameterCheckout.validationAnnotationCustom.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -90,5 +91,8 @@ public class User {
 //    @Size(min = 1)
 //    @Valid
 //    private List<Hobby> hobbys;
+
+    @City(groups = {UserAdd.class})
+    private Integer city;
 
 }
