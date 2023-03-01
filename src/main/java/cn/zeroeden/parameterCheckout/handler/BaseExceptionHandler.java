@@ -87,15 +87,7 @@ public class BaseExceptionHandler {
 
     }
 
-    @ExceptionHandler(value = NotReadablePropertyException.class)
-    public Result totReadablePropertyException(NotReadablePropertyException e){
-        log.info(e.getMessage());
-        log.info(e.getStackTrace().toString());
-        return new Result(REQUEST_PARARMETER_ILLEGAL.code(),
-                e.getMessage(),
-                false);
 
-    }
 
 
 

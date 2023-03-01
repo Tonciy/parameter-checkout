@@ -1,5 +1,6 @@
 package cn.zeroeden.parameterCheckout.entity;
 
+import lombok.Data;
 import lombok.experimental.Delegate;
 
 import javax.validation.Valid;
@@ -12,15 +13,11 @@ import java.util.List;
  * @description:
  */
 
+@Data
 public class ValidationList<E>  implements List<E> {
 
     @Delegate
     @Valid
     public List<E> list = new ArrayList<>();
 
-
-    @Override
-    public String toString() {
-        return super.toString();
-    }
 }
