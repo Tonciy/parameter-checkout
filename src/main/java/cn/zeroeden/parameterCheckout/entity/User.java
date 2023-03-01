@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -81,10 +82,13 @@ public class User {
     private String phone;
 
 
+//    @NotNull(message = "爱好不能为空", groups = UserAdd.class)
+//    @Valid
+//    private Hobby hobby;
+
     @NotNull(message = "爱好不能为空", groups = UserAdd.class)
+    @Size(min = 1)
     @Valid
-    private Hobby hobby;
-
-
+    private List<Hobby> hobbys;
 
 }
