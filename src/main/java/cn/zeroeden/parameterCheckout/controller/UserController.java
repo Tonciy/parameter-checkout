@@ -2,6 +2,7 @@ package cn.zeroeden.parameterCheckout.controller;
 
 import cn.zeroeden.parameterCheckout.contant.ResultCode;
 import cn.zeroeden.parameterCheckout.entity.User;
+import cn.zeroeden.parameterCheckout.entity.ValidationList;
 import cn.zeroeden.parameterCheckout.exception.CommonException;
 import cn.zeroeden.parameterCheckout.exception.IllegalArgumentException;
 import cn.zeroeden.parameterCheckout.model.Result;
@@ -24,6 +25,7 @@ import javax.validation.Validator;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.groups.Default;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -249,8 +251,26 @@ public class UserController {
     }
 
 
+    /**
+     * 集合检验-1
+     * @return
+     */
+    @PostMapping("/add7")
+    public Result addUser7(@RequestBody @Validated(UserAdd.class) List<User> list) {
+        log.info("增加用户:{}", list);
+        return Result.SUCCESS();
+    }
 
 
+    /**
+     * 集合检验-2
+     * @return
+     */
+    @PostMapping("/add8")
+    public Result addUser8(@RequestBody @Validated(UserAdd.class) ValidationList<User> list) {
+        log.info("增加用户:{}", list.toString());
+        return Result.SUCCESS();
+    }
 
 
 

@@ -4,6 +4,8 @@ import cn.zeroeden.parameterCheckout.contant.ResultCode;
 import cn.zeroeden.parameterCheckout.exception.CommonException;
 import cn.zeroeden.parameterCheckout.exception.IllegalArgumentException;
 import cn.zeroeden.parameterCheckout.model.Result;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.NotReadablePropertyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
@@ -28,6 +30,7 @@ import static cn.zeroeden.parameterCheckout.contant.ResultCode.REQUEST_PARARMETE
  * @description: 统一异常处理
  */
 @RestControllerAdvice
+@Slf4j
 public class BaseExceptionHandler {
 
     /**
@@ -83,6 +86,18 @@ public class BaseExceptionHandler {
                 false);
 
     }
+
+    @ExceptionHandler(value = NotReadablePropertyException.class)
+    public Result totReadablePropertyException(NotReadablePropertyException e){
+        log.info(e.getMessage());
+        log.info(e.getStackTrace().toString());
+        return new Result(REQUEST_PARARMETER_ILLEGAL.code(),
+                e.getMessage(),
+                false);
+
+    }
+
+
 
     /**
      * 服务器异常统一返回

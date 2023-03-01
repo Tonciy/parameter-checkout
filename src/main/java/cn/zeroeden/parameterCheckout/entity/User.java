@@ -86,9 +86,9 @@ public class User {
 //    @Valid
 //    private Hobby hobby;
 
-    @NotNull(message = "爱好不能为空", groups = UserAdd.class)
-    @Size(min = 1)
-    @Valid
-    private List<Hobby> hobbys;
+//    @NotNull(message = "爱好不能为空", groups = UserAdd.class)
+//    @Size(min = 1)
+//    @Valid
+//    private List<Hobby> hobbys;
 
 }
