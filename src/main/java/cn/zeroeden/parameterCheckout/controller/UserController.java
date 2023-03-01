@@ -231,8 +231,20 @@ public class UserController {
      * @return
      */
     @PostMapping("/update5")
-    public Result updateById5(@RequestBody @Validated({ValidGroup.UserCurd.Update.class}) User user) {
+    public Result updateById5(@RequestBody @Validated({ValidGroup.UserCurd.Update.class,Default.class}) User user) {
         log.info("根据Id修改用户：{}", user);
+        return Result.SUCCESS();
+    }
+
+
+    /**
+     * 嵌套查询-1
+     * @param user
+     * @return
+     */
+    @PostMapping("/add6")
+    public Result addUser6(@RequestBody @Validated(UserAdd.class) User user) {
+        log.info("增加用户:{}", user);
         return Result.SUCCESS();
     }
 
